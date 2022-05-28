@@ -46,6 +46,7 @@ def logoutuser(request):
     return redirect('/')
 
 
+# registration
 def registerUser(request):
     user = request.user
     if user.is_authenticated:
@@ -67,8 +68,121 @@ def registerUser(request):
     return render(request,'register.html',context)
 
 
+# profile
+@login_required
+def profile(request):
+    context['page_title'] = 'Profile'
+    return render(request, 'profile.html',context)
 
+
+@login_required
+def update_profile(request):
+    context['page_title'] = 'Update Profile'
+    user = User.objects.get(id=request.user.id)
+    if not request.method == 'POST':
+        form = UpdateProfile(instance=user)
+        context['form'] = form
+        print(form)
+    else:
+        form = UpdateProfile(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile has been updated")
+            return redirect("profile")
+        else:
+            context['form'] = form
+
+    return render(request, 'update_profile.html', context)
+
+
+@login_required
+def update_password(request):
+    context['page_title'] = "Update Password"
+    if request.method == 'POST':
+        form = UpdatePasswords(user = request.user, data= request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Your Account Password has been updated successfully")
+            update_session_auth_hash(request, form.user)
+            return redirect("profile")
+        else:
+            context['form'] = form
+    else:
+        form = UpdatePasswords(request.POST)
+        context['form'] = form
+    return render(request,'update_password.html',context)
+
+
+# home
 def home(request):
     context['page_title'] = 'Home'
+    context['categories'] = Category.objects.count()
 
     return render(request, 'home.html',context)
+
+
+# Category
+@login_required
+def category_mgt(request):
+    context['page_title'] = "Product Categories"
+    categories = Category.objects.all()
+    context['categories'] = categories
+
+    return render(request, 'category.html', context)
+
+
+@login_required
+def save_category(request):
+    resp = {'status': 'failed', 'msg': ''}
+    if request.method == 'POST':
+        if (request.POST['id']).isnumeric():
+            category = Category.objects.get(pk=request.POST['id'])
+        else:
+            category = None
+        if category is None:
+            form = SaveCategory(request.POST)
+        else:
+            form = SaveCategory(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category has been saved successfully.')
+            resp['status'] = 'success'
+        else:
+            for fields in form:
+                for error in fields.errors:
+                    resp['msg'] += str(error + "<br>")
+    else:
+        resp['msg'] = 'No data has been sent.'
+    return HttpResponse(json.dumps(resp), content_type='application/json')
+
+
+@login_required
+def manage_category(request, pk=None):
+    context['page_title'] = "Manage Category"
+    if not pk is None:
+        category = Category.objects.get(id=pk)
+        context['category'] = category
+    else:
+        context['category'] = {}
+
+    return render(request, 'manage_category.html', context)
+
+
+@login_required
+def delete_category(request):
+    resp = {'status': 'failed', 'msg': ''}
+
+    if request.method == 'POST':
+        try:
+            category = Category.objects.get(id=request.POST['id'])
+            category.delete()
+            messages.success(request, 'Category has been deleted successfully')
+            resp['status'] = 'success'
+        except Exception as err:
+            resp['msg'] = 'Category has failed to delete'
+            print(err)
+
+    else:
+        resp['msg'] = 'Category has failed to delete'
+
+    return HttpResponse(json.dumps(resp), content_type="application/json")

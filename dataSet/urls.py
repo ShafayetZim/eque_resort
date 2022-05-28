@@ -10,5 +10,13 @@ urlpatterns = [
     path('userlogin', views.login_user, name="login-user"),
     path('user-register', views.registerUser, name="register-user"),
     path('logout',views.logoutuser,name='logout'),
+    path('profile',views.profile,name='profile'),
+    path('update-profile',views.update_profile,name='update-profile'),
+    path('update-password',views.update_password,name='update-password'),
     path('',views.home,name='home-page'),
+    path('category', views.category_mgt, name='category-page'),
+    path('manage_category', views.manage_category, name='manage-category'),
+    path('save_category', views.save_category, name='save-category'),
+    path('manage_category/<int:pk>', views.manage_category, name='manage-category-pk'),
+    path('delete_category', views.delete_category, name='delete-category'),
 ]
