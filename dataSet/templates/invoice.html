@@ -41,7 +41,7 @@
                             <td class="px-2 py-1 align-middle text-end">{{ invoice.item_count|floatformat:0|intcomma }}</td>
                             <td class="px-2 py-1 align-middle text-end">{{ invoice.total|floatformat:2|intcomma }}</td>
                             <td class="px-2 py-1 align-middle text-center">
-                                <a href="{% url 'invoice-detail' id=invoice.id %}" onclick="window.print()">
+                                <a href="{% url 'invoice-detail' id=invoice.id %}">
                                     <div class="btn btn-outline-info btn-sm"><i class='fas fa-th-list'></i></div>
                                 </a>
 <!--                                <a href="{% url 'manage-laundry-pk' invoice.pk %}">-->
