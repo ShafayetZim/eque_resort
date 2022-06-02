@@ -43,17 +43,17 @@
                         <table class="table table-bordered" id="product-tbl">
                             <colgroup>
                                 <col width="5%">
-                                <col width="15%">
                                 <col width="30%">
                                 <col width="25%">
+                                <col width="15%">
                                 <col width="25%">
                             </colgroup>
                             <thead>
                                 <tr>
                                     <th class="text-center px-2 py-1"></th>
-                                    <th class="text-center px-2 py-1">QTY</th>
                                     <th class="text-center px-2 py-1">Product</th>
                                     <th class="text-center px-2 py-1">Price</th>
+                                    <th class="text-center px-2 py-1">QTY</th>
                                     <th class="text-center px-2 py-1">Total</th>
                                 </tr>
                             </thead>
@@ -82,9 +82,9 @@
             <input type="hidden" class="input-price" name="price[]" values="">
             <button class="btn btn-outline-danger btn-sm rem-item" type="button"><i class="fa fa-times"></i></button>
         </td>
+        <td class="align-middle text-center px-2 py-1 product_name">product 101</td>
+        <td class="align-middle text-center px-2 py-1 product_price">0.00</td>
         <td class="align-middle text-center px-2 py-1"><input type="number" min="0" name="quantity[]" value="1" class="form-control rounded-0  text-center input-quantity"></td>
-        <td class="align-middle px-2 py-1 product_name">product 101</td>
-        <td class="align-middle text-end px-2 py-1 product_price">0.00</td>
         <td class="align-middle text-end px-2 py-1 product_total">0.00</td>
     </tr>
 </noscript> {% endblock pageContent %} {% block ScriptBlock %}
