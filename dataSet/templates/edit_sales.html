@@ -1,0 +1,158 @@
+{% extends 'base.html' %} {% load humanize %}
+
+{% block pageContent %}
+
+<div class="col-lg-12 p-4">
+    <div class="row">
+        <div class="col-lg-12 col-12 layout-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+
+                            <center>
+                                <h3><strong>Update Sales</strong></h3>
+                            </center>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-content widget-content-area">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ sales_form.customer}}
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <br>
+                        <div><h1 id="error_sales_form_remove"></h1></div>
+
+                        <div class="panel panel-default">
+
+                            {{ formset.management_form }}
+                            <div id="stockitem">
+                                <div class="panel-body">
+                                    {% for iform in formset %}
+
+                                    {% for hidden in iform.hidden_fields %}
+                                    {{ hidden }}
+                                    {% endfor %}
+                                    <!-- form.visible fields go here -->
+
+                                    <div class="row form-row">
+                                        <div class="form-group col-md-3">
+                                            {{ iform.stock.errors }}
+                                            <label class="panel-body-text">Product:</label>
+                                            {{ iform.product }}
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label class="panel-body-text">Stock</label>
+
+                                        </div>
+
+                                        <div class="form-group col-md-1">
+                                            {{ iform.quantity.errors }}
+                                            <label class="panel-body-text">Qty</label>
+                                            {{ iform.quantity }}
+                                        </div>
+
+                                        <div class="form-group col-md-1">
+                                            <label class="panel-body-text">Price</label>
+                                            {{ iform.price }}
+                                        </div>
+
+
+                                        <div class="form-group col-md-2">
+                                            <label class="panel-body-text">Amount</label>
+
+
+                                        </div>
+                                        <div class="form-group col-md-1">
+                                            <label class="panel-body-text" style="color: #FFF">.</label>
+                                            <button class="form-control btn btn-danger remove-form-row"
+                                                    id="id_remove_form_button">x
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+
+                                    {% if form.id.value is None %}
+                                    <div style="text-align: right;">
+                                        <a href="#" class="add-form-row">+ Add More</a>
+                                    </div>
+                                    {% endif %}
+
+                                    <br>
+                                    <div class="subtotal-details">
+                                        <div class="subtotal_data">
+
+                                            <div class="row mb-4">
+
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        {{ sales_form.quantity }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="form-group">
+
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary ">Update</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock pageContent %}
+{% block ScriptBlock %}
+
+ <script>
+    $(document).ready(function() {
+        $('select').select2({
+
+            theme: 'bootstrap4',
+
+        });
+
+    });
+ </script>
+{% endblock ScriptBlock %}
+
