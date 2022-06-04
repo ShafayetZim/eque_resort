@@ -61,6 +61,8 @@ class Invoice(models.Model):
     transaction = models.CharField(max_length = 250)
     customer = models.CharField(max_length = 250)
     total = models.FloatField(default= 0)
+    paid = models.FloatField(default= 0, blank=True, null=True)
+    due = models.FloatField(default=0, blank=True, null=True)
     date_created = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -69,6 +71,10 @@ class Invoice(models.Model):
 
     def item_count(self):
         return Invoice_Item.objects.filter(invoice = self).aggregate(Sum('quantity'))['quantity__sum']
+
+    def change(self):
+        change = float(self.total) - float(self.paid)
+        return change
 
 
 # invoice items
@@ -79,6 +85,9 @@ class Invoice_Item(models.Model):
     buy_price = models.FloatField(default=0)
     price = models.FloatField(default=0)
     quantity = models.FloatField(default=0)
+
+    def amount(self):
+        return self.quantity * self.price
 
     def __str__(self):
         return self.invoice.transaction
@@ -134,6 +143,14 @@ def incoming_stock_update(sender, instance, **kwargs):
     stock.save()
     # stockID = Stock.objects.last().id
     IncomingInvoice_Item.objects.filter(id=instance.id).update(stock=stock)
+
+
+@receiver(models.signals.post_delete, sender=IncomingInvoice_Item)
+def delete_stock(sender, instance, **kwargs):
+    try:
+        stock = Stock.objects.get(id=instance.stock.id).delete()
+    except:
+        return instance.stock.id
 
 
 
