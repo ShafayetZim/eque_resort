@@ -5,11 +5,19 @@
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <table style="height: 25px; width: 100%; border-collapse: collapse; border-style: hidden;" border="0">
+    <table style="height: 20px; width: 100%; border-collapse: collapse; border-style: hidden;" border="0">
         <tbody>
-        <tr style="height: 25px; border-style: hidden;">
-            <td style="width: 75.7668%; height: 25px; font-size: 20px; border-style: hidden;"><strong>Invoice no: </strong>{{invoice_info.transaction}}</td>
-            <td style="width: 24.2332%; height: 25px; font-size: 25px;"><strong>Date: {{invoice_info.date_created}}</strong></td>
+        <tr style="height: 20px; border-style: hidden;">
+            <td style="width: 75.7668%; height: 20px; font-size: 20px; border-style: hidden;"><strong>Shop: </strong>Eque Resort</td>
+            <td style="width: 24.2332%; height: 30px; font-size: 20px;"><strong>Invoice no: </strong>{{invoice_info.transaction}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table style="height: 20px; width: 100%; border-collapse: collapse; border-style: hidden;" border="0">
+        <tbody>
+        <tr style="height: 20px; border-style: hidden;">
+            <td style="width: 75.7668%; height: 13px; font-size: 13px; border-style: hidden;"><strong>Mobile: </strong>01523-458120</td>
+            <td style="width: 24.2332%; height: 30px; font-size: 30px;"><strong>Date: </strong>{{invoice_info.date_created}}</td>
         </tr>
         </tbody>
     </table>
@@ -18,12 +26,12 @@
     <table style="height: 20px; width: 100%; border-collapse: collapse;" border="0">
         <tbody>
         <tr style="height: 20px; border-style: hidden;">
-            <td style="width: 75.7668%; height: 20px; font-size: 20px;"><strong>Customer: </strong>{{invoice_info.customer}}</td>
-<!--            <td style="width: 24.2332%; height: 20px; font-size: 20px; border-style: hidden;"><strong>Bill no: </strong></td>-->
+            <td style="width: 75.7668%; height: 20px; font-size: 20px;"><strong>Address: </strong>Bashundhara R/A</td>
+            <td style="width: 24.2332%; height: 20px; font-size: 20px; border-style: hidden;"><strong>Customer: </strong>{{invoice_info.customer}}</td>
         </tr>
         </tbody>
     </table>
-    <strong>Address: </strong>Bashundhara</div>
+<!--    <strong>Address: </strong>Bashundhara</div>-->
 <div class="center" style="text-align: left;">&nbsp;</div>
 <div class="center" style="text-align: left;">
     <table style="height: 98px; width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto;"
@@ -80,6 +88,13 @@
             <td style="width: 70%; height: 28px;" colspan="3">&nbsp;</td>
             <td style="width: 15%; text-align: center; height: 28px;">Total Tk.</td>
             <td style="width: 15%; text-align: center; height: 28px;">{{invoice_info.total|intcomma}}</td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 50%; text-align: center; height: 28px;" colspan="3">&nbsp;Paid Tk. {{invoice_info.paid|intcomma}}</td>
+            <td style="width: 15%; text-align: center; height: 28px;" >Due Tk.</td>
+            <td style="width: 15%; text-align: center; height: 28px;" >{{invoice_info.change|intcomma}}</td>
+
+
         </tr>
         </tbody>
     </table>
