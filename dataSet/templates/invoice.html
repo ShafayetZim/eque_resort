@@ -11,13 +11,13 @@
                 <table class="table table-bordered" id="invoice-list">
                     <colgroup>
                         <col width="5%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
                         <col width="20%">
-                        <col width="15%">
-                        <col width="15%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="15%">
                     </colgroup>
                     <thead>
                         <tr class="bg-gradient bg-primary bg-opacity-50 text-light">
@@ -27,7 +27,7 @@
                             <th class="px-2 py-2 text-center">Customer</th>
                             <th class="px-2 py-2 text-center">Total Item</th>
                             <th class="px-2 py-2 text-center">Total Amount</th>
-                            <th class="px-2 py-2 text-center">View</th>
+                            <th class="px-2 py-2 text-center">Due</th>
                             <th class="px-2 py-2 text-center">Action</th>
                         </tr>
                     </thead>
@@ -40,23 +40,26 @@
                             <td class="px-2 py-1 align-middle">{{ invoice.customer }}</td>
                             <td class="px-2 py-1 align-middle text-end">{{ invoice.item_count|floatformat:0|intcomma }}</td>
                             <td class="px-2 py-1 align-middle text-end">{{ invoice.total|floatformat:2|intcomma }}</td>
-                            <td class="px-2 py-1 align-middle text-center">
-                                <a href="{% url 'invoice-detail' id=invoice.id %}">
-                                    <div class="btn btn-outline-info btn-sm"><i class='fas fa-th-list'></i></div>
-                                </a>
+                            <td class="px-2 py-1 align-middle text-center">{{ invoice.change|floatformat:2|intcomma }}
 <!--                                <a href="{% url 'manage-laundry-pk' invoice.pk %}">-->
 <!--                                    <div class="btn btn-outline-warning btn-sm"><i class='fas fa-edit'></i></div>-->
 <!--                                </a>-->
                             </td>
                             <td class="px-2 py-1 align-middle text-center">
-                                <button class="btn btn-outline-danger btn-sm delete-data" type="button" data-id="{{ invoice.pk }}" title="Delete">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <a href="{% url 'invoice-detail' id=invoice.id %}" title="View">
+                                    <div class="btn btn-outline-info btn-sm"><i class='fas fa-th-list'></i></div>
+                                </a>
                                 <a href="{% url 'print-sales' id=invoice.id %}" target="_blank">
                                 <button class="btn btn-outline-success btn-sm" type="button" data-id="{{ invoice.pk }}" title="Print">
                                     <i class="fas fa-file-pdf"></i>
                                 </button>
                                 </a>
+                                <a href="{% url 'update-due' invoice.id %}" title="Due update">
+                                    <div class="btn btn-outline-warning btn-sm"><i class='fas fa-edit'></i></div>
+                                </a>
+                                <button class="btn btn-outline-danger btn-sm delete-data" type="button" data-id="{{ invoice.pk }}" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                         {% endfor %}
@@ -66,7 +69,9 @@
         </div>
     </div>
 </div>
+
 {% endblock pageContent %} {% block ScriptBlock %}
+</script>
 <script>
     $(function() {
         $('.delete-data').click(function() {
@@ -125,4 +130,5 @@
         })
     }
 </script>
+
 {% endblock ScriptBlock %}
