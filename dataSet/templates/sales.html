@@ -59,11 +59,27 @@
                             </thead>
                             <tbody></tbody>
                             <tfoot>
-                                <th colspan="4" class="text-center"><b>Total</b></th>
-                                <th class="text-end">
-                                    <input type="hidden" name="total" value="0">
-                                    <span class="fw-bold" id="total">0.00</span>
-                                </th>
+                                <tr>
+                                    <th colspan="4" class="text-center"><b>Total</b></th>
+                                    <th class="text-end">
+                                        <input type="hidden" name="total" value="0">
+                                        <span class="fw-bold" id="total">0.00</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" class="text-center"><b>Paid</b></th>
+                                    <th class="text-end">
+                                        <input class="text-end" type="number" id="paid_amount" name="paid" value="0">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" class="text-center"><b>Due</b></th>
+                                    <th class="text-end">
+                                        <input type="hidden" name="due" value="0">
+                                        <span class="fw-bold" id="due">0.00</span>
+                                    </th>
+                                </tr>
+
                             </tfoot>
                         </table>
                     </fieldset>
@@ -108,6 +124,20 @@
         $('#pid').select2({
             placeholder: 'Please Select Product here',
             width: "100%"
+        })
+
+        $('#paid_amount').on('change input', function() {
+            var paid = $(this).val()
+            var total = $('[name="total"]').val()
+            paid = paid > 0 ? paid : 0;
+            total = total > 0 ? total : 0;
+            due = parseFloat(total) - parseFloat(paid)
+            $('#due').text(parseFloat(due).toLocaleString('en-US', {
+                style: 'decimal',
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+            }))
+
         })
 
         $('#add_to_list').click(function() {
@@ -169,6 +199,15 @@
             if (_this[0].checkValidity() == false) {
                 _this[0].reportValidity();
                 return false;
+            }
+            if ($('#paid_amount').prop('required') == true) {
+                var due = $('#due').text()
+                due = due.replace(/,/gi, '')
+                due = !isNaN(due) ? due : 0
+                if (due < 0) {
+                    alert("Paid amount is invalid.")
+                    return false
+                }
             }
             start_loader();
             $.ajax({
