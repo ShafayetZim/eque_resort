@@ -1,10 +1,10 @@
 {% extends "base.html" %} {% load humanize %} {% load customfilter %} {% block pageContent %}
-
+{% load mathfilters %}
 <!--Section: Content-->
 <section class="">
 
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="card rounded-0 shadow border-primary text-start summary-card my-3">
                 <div class="card-body">
                     <div class="d-flex w-100">
@@ -14,15 +14,15 @@
                         </div>
                         <div class="col-4">
                             <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
-                                <i class="fa fa-list"></i>
+                                <i class="fab fa-accusoft fs-2"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="card rounded-0 shadow border-warning text-start summary-card my-3">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-dark text-start summary-card my-3">
                 <div class="card-body">
                     <div class="d-flex w-100">
                         <div class="col-8 pe-2">
@@ -38,8 +38,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="card rounded-0 shadow border-success text-start summary-card my-3">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-secondary text-start summary-card my-3">
                 <div class="card-body">
                     <div class="d-flex w-100">
                         <div class="col-8 pe-2">
@@ -49,6 +49,99 @@
                         <div class="col-4">
                             <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
                                 <i class="fa fa-file-invoice fs-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-warning text-start summary-card my-3">
+                <a href="{% url 'low-stock-page' %}" style="color: black">
+                <div class="card-body">
+                    <div class="d-flex w-100">
+                        <div class="col-8 pe-2">
+                            <div class="summary-title fs-5 border-bottom">Low Stock</div>
+                            {% for stock in stocks %}
+                            {% if stock.count_inventory < 5 %}
+                            <div class="summary-count text-end fw-bolder mt-3 px-4">{{forloop.counter}}</div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-4">
+                            <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
+                                <i class="fa fa-list"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-info text-start summary-card my-3">
+                <div class="card-body">
+                    <div class="d-flex w-100">
+                        <div class="col-8 pe-2">
+                            <div class="summary-title fs-5 border-bottom">Total Sale</div>
+                            <div class="summary-count text-end fw-bolder mt-3 px-4">{{ net|intcomma }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
+                                <i class="fas fa-money-bill-wave fs-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-success text-start summary-card my-3">
+                <div class="card-body">
+                    <div class="d-flex w-100">
+                        <div class="col-8 pe-2">
+                            <div class="summary-title fs-5 border-bottom">Total Sale Today</div>
+                            <div class="summary-count text-end fw-bolder mt-3 px-4">{{ td.sum }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
+                                <i class="fas fa-money-check-alt fs-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-success text-start summary-card my-3">
+                <div class="card-body">
+                    <div class="d-flex w-100">
+                        <div class="col-8 pe-2">
+                            <div class="summary-title fs-5 border-bottom">Collection Today</div>
+                            <div class="summary-count text-end fw-bolder mt-3 px-4">{{ collection.sum }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
+                                <i class="far fa-money-bill-alt fs-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="card rounded-0 shadow border-danger text-start summary-card my-3">
+                <div class="card-body">
+                    <div class="d-flex w-100">
+                        <div class="col-8 pe-2">
+                            <div class="summary-title fs-5 border-bottom">Due Today</div>
+                            <div class="summary-count text-end fw-bolder mt-3 px-4">{{ td.sum|sub:collection.sum }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="summary-icon p-3 rounded border text-center bg-gradient bg-light">
+                                <i class="fas fa-balance-scale-left fs-2"></i>
                             </div>
                         </div>
                     </div>
