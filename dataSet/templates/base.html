@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="author" name="Shafayet Jamil">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page_title %}
-    <title>{{ page_title }} | Inventory Management System</title>
+    <title>{{ page_title }} | Eque Resort</title>
     {% else %}
-    <title>Inventory Management System</title>
+    <title>Eque Resort Management System</title>
     {% endif %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
@@ -34,6 +35,26 @@
 </head>
 
 <body class="">
+<header class="bg-light text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); position: relative; width: 100%;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-7">
+                    </div>
+                <div class="col-sm-5">
+                    <div class="text-end ">
+                        {% if user.is_authenticated %}
+                        <button title="Profile" style="border: 2px solid #8000ff;"><a href="profile" style="color: #4A235A;">&nbsp;&nbsp;<i class="fas fa-skating"></i> {{request.user}}</a></button>
+                        <a href="{% url 'logout' %}" title="Logout" style="color: #8000ff;">&nbsp;&nbsp;<i class="fas fa-power-off"></i></a>
+                        {% else %}
+                        <a href="{% url 'login' %}" title="Login" style="color: #8000ff;">&nbsp;&nbsp;<i class="fas fa-sign-in-alt"></i> login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 <!--    top navigation start-->
 
 <!--    top navigation end-->
@@ -46,18 +67,23 @@
 			<span class="bottom_line common"></span>
 		</div>
 
-		<div class="slide">
+		<div class="slide" style="overflow:scroll; height:500px;">
 			<h1>MENU</h1>
 			<ul>
-				<li><a href="#">&nbsp;&nbsp;<i class="fas fa-tv"></i> dashboard</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="far fa-user"></i> profile</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="fab fa-gripfire"></i> trending</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="far fa-comments"></i> messages</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="far fa-folder"></i> file manager</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="far fa-address-book"></i> portfolio</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="far fa-heart"></i> saved</a></li>
-				<li><a href="#">&nbsp;&nbsp;<i class="fas fa-cogs"></i> setting</a></li>
-				<li><a href="{% url 'logout' %}">&nbsp;&nbsp;<i class="fas fa-sign-out" ></i> logout</a></li>
+				<li><a href="{% url 'home-page' %}">&nbsp;&nbsp;<i class="fas fa-tv"></i> dashboard</a></li>
+                <li><a href="{% url 'category-page' %}">&nbsp;&nbsp;<i class="far fa-folder"></i> category</a></li>
+                <li><a href="{% url 'product-page' %}">&nbsp;&nbsp;<i class="fab fa-gripfire"></i> product</a></li>
+				<li><a href="{% url 'inventory-page' %}">&nbsp;&nbsp;<i class="fab fa-codepen"></i> stock</a></li>
+				<li><a href="{% url 'sales-page' %}">&nbsp;&nbsp;<i class="fab fa-first-order-alt"></i> sale</a></li>
+                <li><a href="{% url 'invoice-page' %}">&nbsp;&nbsp;<i class="fas fa-receipt"></i> invoice</a></li>
+                <li><a href="{% url 'purchase-page' %}">&nbsp;&nbsp;<i class="fas fa-dolly"></i> purchase</a></li>
+                <li><a href="{% url 'incoming-invoice-page' %}">&nbsp;&nbsp;<i class="fas fa-file-invoice"></i> receipt</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">&nbsp;&nbsp;<i class="far fa-user"></i> profile</a></li>
+                <li><a href="{% url 'logout' %}">&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i> logout</a></li>
+                {% else %}
+				<li><a href="{% url 'login' %}">&nbsp;&nbsp;<i class="fas fa-sign-in-alt"></i> login</a></li>
+                {% endif %}
 			</ul>
 		</div>
 	</label>
@@ -193,8 +219,8 @@
 
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); position: relative; width: 100%;">
-            © {% now 'Y' %} Copyright:
-            <a class="text-dark" href="https://sourcecodester.com/tips23" target="_blank">..</a>
+            © {% now 'Y' %} : Eque Resort | Developed by:
+            <a class="text-dark" href="https://ekattorit.com/" target="_blank"><span style="color: green;"><strong>Ekattor</strong></span><span style="color: red;"><strong> iT</strong></span></a>
         </div>
         <!-- Copyright -->
     </footer>
