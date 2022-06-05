@@ -79,6 +79,7 @@
                 <li><a href="{% url 'purchase-page' %}">&nbsp;&nbsp;<i class="fas fa-dolly"></i> purchase</a></li>
                 <li><a href="{% url 'incoming-invoice-page' %}">&nbsp;&nbsp;<i class="fas fa-file-invoice"></i> receipt</a></li>
                 {% if user.is_authenticated %}
+                <li><a href="{% url 'register-user' %}">&nbsp;&nbsp;<i class="fas fa-plus"></i> Add User</a></li>
                 <li><a href="{% url 'profile' %}">&nbsp;&nbsp;<i class="far fa-user"></i> profile</a></li>
                 <li><a href="{% url 'logout' %}">&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i> logout</a></li>
                 {% else %}
