@@ -56,20 +56,21 @@ def logoutuser(request):
 
 
 # registration
+@login_required
 def registerUser(request):
-    user = request.user
-    if user.is_authenticated:
-        return redirect('home-page')
+    # user = request.user
+    # if user.is_authenticated:
+    #     return redirect('home-page')
     context['page_title'] = "Register User"
     if request.method == 'POST':
         data = request.POST
         form = UserRegistration(data)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            pwd = form.cleaned_data.get('password1')
-            loginUser = authenticate(username= username, password = pwd)
-            login(request, loginUser)
+            # username = form.cleaned_data.get('username')
+            # pwd = form.cleaned_data.get('password1')
+            # loginUser = authenticate(username= username, password = pwd)
+            # login(request, loginUser)
             return redirect('home-page')
         else:
             context['reg_form'] = form
@@ -403,6 +404,7 @@ def get_product(request, pk=None):
         resp['data']['product'] = str(product.code + " - " + product.name)
         resp['data']['id'] = product.id
         resp['data']['price'] = product.price
+        resp['data']['rate'] = product.rate
         resp['status'] = 'success'
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
