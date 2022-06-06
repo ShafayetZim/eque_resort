@@ -92,12 +92,12 @@
     function calc() {
         var gtotal = 0
         $('#product-tbl tbody tr').each(function() {
-            var price = $(this).find('.input-price').val()
+            var rate = $(this).find('.input-price').val()
             var quantity = $(this).find('.input-quantity').val()
-            price = price > 0 ? price : 0
+            rate = rate > 0 ? rate : 0
             quantity = quantity > 0 ? quantity : 0
-            console.log(price, quantity)
-            var total = parseFloat(price) * parseFloat(quantity)
+            console.log(rate, quantity)
+            var total = parseFloat(rate) * parseFloat(quantity)
             $(this).find('.product_total').text(parseFloat(total).toLocaleString('en-US'))
             gtotal += parseFloat(total)
         })
@@ -133,10 +133,10 @@
                             var tr = $($('noscript#prod-item-clone').html()).clone()
                             tr.attr('data-id', data.id)
                             tr.find('input[name="pid[]"]').val(data.id)
-                            tr.find('input[name="price[]"]').val(data.price)
+                            tr.find('input[name="price[]"]').val(data.rate)
                             tr.find('.product_name').text(data.product)
-                            tr.find('.product_price').text(parseFloat(data.price).toLocaleString('en-US'))
-                            tr.find('.product_total').text(parseFloat(data.price).toLocaleString('en-US'))
+                            tr.find('.product_price').text(parseFloat(data.rate).toLocaleString('en-US'))
+                            tr.find('.product_total').text(parseFloat(data.rate).toLocaleString('en-US'))
                             $('#product-tbl tbody').append(tr)
                             tr.find('[name="quantity[]"]').on('change input', function(e) {
                                 calc()
