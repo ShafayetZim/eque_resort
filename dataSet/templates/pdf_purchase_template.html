@@ -1,4 +1,5 @@
 <!DOCTYPE html>{% load static%}
+{% load mathfilters %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -49,7 +50,7 @@
             <td class="desc">{{item.product}}</td>
             <td class="unit">{{item.price}}</td>
             <td class="qty">{{item.quantity}}</td>
-            <td class="total">{{item.amount}}</td>
+            <td class="total">{{item.price|mul:item.quantity}}</td>
 		  </tr>
 		  {% endfor %}
         </tbody>
